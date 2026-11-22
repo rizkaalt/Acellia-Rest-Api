@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --md-primary: 106 76 147;
+  --md-on-primary: 255 255 255;
+  --md-primary-container: 233 221 255;
+  --md-on-primary-container: 38 14 74;
+  --md-secondary: 212 160 23;
+  --md-tertiary: 44 44 52;
+  --md-surface: 253 251 247;
+  --md-on-surface: 29 27 32;
+  --md-surface-variant: 239 233 244;
+  --md-outline: 122 117 127;
+  --md-error: 186 26 26;
+}
+.dark {
+  --md-primary: 207 188 255;
+  --md-on-primary: 55 30 100;
+  --md-primary-container: 82 56 125;
+  --md-on-primary-container: 233 221 255;
+  --md-secondary: 232 192 74;
+  --md-tertiary: 200 198 210;
+  --md-surface: 26 26 31;
+  --md-on-surface: 230 225 230;
+  --md-surface-variant: 74 69 79;
+  --md-outline: 148 143 153;
+  --md-error: 255 180 171;
+}
+body { @apply bg-surface text-on-surface font-body antialiased; }
+.star-pattern {
+  background-image: radial-gradient(rgb(var(--md-primary) / .12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
