@@ -33,3 +33,12 @@ curl -X POST http://localhost:3000/api/v1/download \
 - `@coflyn/scrapr` dipasang dari `vendor/scrapr` (`file:`). Dependensinya (axios, cheerio) ikut terpasang lewat `npm install`.
 - Scraper bergantung pada situs pihak ketiga; bisa berubah/mati sewaktu-waktu.
 - Key mentah hanya ditampilkan sekali; di database hanya hash SHA-256(key + pepper).
+
+## Domain kustom (api.camellia.my.id)
+1. Vercel → Project → Settings → Domains → tambahkan `api.camellia.my.id`.
+2. Di DNS domain, buat record `CNAME`: nama `api` → `cname.vercel-dns.com`.
+3. Ubah `BASE_URL` di `lib/config.ts` jika domainnya berbeda.
+
+## Endpoint scraper
+Semua method `@coflyn/scrapr` tersedia di `GET|POST /api/v1/scrape/{platform}/{method}` (parameter `url` atau `q`).
+Daftar lengkap ada di halaman `/docs` dan `GET /api/v1/platforms`.

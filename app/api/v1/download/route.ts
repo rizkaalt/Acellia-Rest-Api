@@ -7,18 +7,26 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
+export async function GET(req: NextRequest) {
+  return handle(req, req.nextUrl.searchParams.get("url"));
+}
+
 export async function POST(req: NextRequest) {
+  let body: unknown;
+  try { body = await req.json(); } catch {
+    return fail(400, "INVALID_BODY", "Body harus JSON: { \"url\": \"...\" }");
+  }
+  return handle(req, (body as { url?: unknown } | null)?.url);
+}
+
+async function handle(req: NextRequest, urlInput: unknown) {
   const profile = await authenticate(req);
   if (!profile) {
     await logRequest(null, "/api/v1/download", 401);
     return fail(401, "INVALID_API_KEY", "API key tidak valid atau tidak ditemukan.");
   }
 
-  let body: unknown;
-  try { body = await req.json(); } catch {
-    return fail(400, "INVALID_BODY", "Body harus JSON: { \"url\": \"...\" }");
-  }
-  const parsed = downloadSchema.safeParse(body);
+  const parsed = downloadSchema.safeParse({ url: urlInput });
   if (!parsed.success) {
     return fail(400, "INVALID_URL", parsed.error.issues[0]?.message ?? "URL tidak valid");
   }
