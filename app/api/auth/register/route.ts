@@ -35,8 +35,9 @@ export async function POST(req: NextRequest) {
   const { key, hash, preview } = generateApiKey();
   const { error: pErr } = await admin.from("profiles").insert({
     id: data.user.id, username, email, api_key_hash: hash, api_key_preview: preview, tier: "free",
-  });
+  });  
   if (pErr) {
+    console.error("PROFILE_INSERT_ERROR:", pErr.code, pErr.message, pErr.details, pErr.hint);
     await admin.auth.admin.deleteUser(data.user.id);
     return NextResponse.json({ success: false, error: "PROFILE_FAILED", message: "Gagal membuat profil." }, { status: 500 });
   }
